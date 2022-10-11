@@ -1,19 +1,19 @@
 <?php
 
-namespace LaravelArchivable\Scopes;
+namespace LaravelCancellable\Scopes;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
 
-class ArchivableScope implements Scope
+class CancellableScope implements Scope
 {
     /**
      * All of the extensions to be added to the builder.
      *
      * @var array
      */
-    protected $extensions = ['Archive', 'UnArchive', 'WithArchived', 'WithoutArchived', 'OnlyArchived'];
+    protected $extensions = ['Cancel', 'UnCancel', 'WithCancelled', 'WithoutCancelled', 'OnlyCancelled'];
 
     /**
      * Apply the scope to a given Eloquent query builder.
@@ -24,8 +24,8 @@ class ArchivableScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        if (is_callable([$model, 'getQualifiedArchivedAtColumn'], true, $name)) {
-            $builder->whereNull($model->getQualifiedArchivedAtColumn());
+        if (is_callable([$model, 'getQualifiedCancelledAtColumn'], true, $name)) {
+            $builder->whereNull($model->getQualifiedCancelledAtColumn());
         }
     }
 
@@ -43,30 +43,30 @@ class ArchivableScope implements Scope
     }
 
     /**
-     * Get the "archived at" column for the builder.
+     * Get the "cancelled at" column for the builder.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $builder
      * @return string
      */
-    protected function getArchivedAtColumn(Builder $builder)
+    protected function getCancelledAtColumn(Builder $builder)
     {
         if (count((array) $builder->getQuery()->joins) > 0) {
-            return $builder->getModel()->getQualifiedArchivedAtColumn();
+            return $builder->getModel()->getQualifiedCancelledAtColumn();
         }
 
-        return $builder->getModel()->getArchivedAtColumn();
+        return $builder->getModel()->getCancelledAtColumn();
     }
 
     /**
-     * Add the archive extension to the builder.
+     * Add the cancel extension to the builder.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $builder
      * @return void
      */
-    protected function addArchive(Builder $builder)
+    protected function addCancel(Builder $builder)
     {
-        $builder->macro('archive', function (Builder $builder) {
-            $column = $this->getArchivedAtColumn($builder);
+        $builder->macro('cancel', function (Builder $builder) {
+            $column = $this->getCancelledAtColumn($builder);
 
             return $builder->update([
                 $column => $builder->getModel()->freshTimestampString(),
@@ -75,17 +75,17 @@ class ArchivableScope implements Scope
     }
 
     /**
-     * Add the un-archive extension to the builder.
+     * Add the un-cancel extension to the builder.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $builder
      * @return void
      */
-    protected function addUnArchive(Builder $builder)
+    protected function addUnCancel(Builder $builder)
     {
-        $builder->macro('unArchive', function (Builder $builder) {
-            $builder->withArchived();
+        $builder->macro('unCancel', function (Builder $builder) {
+            $builder->withCancelled();
 
-            $column = $this->getArchivedAtColumn($builder);
+            $column = $this->getCancelledAtColumn($builder);
 
             return $builder->update([
                 $column => null,
@@ -94,16 +94,16 @@ class ArchivableScope implements Scope
     }
 
     /**
-     * Add the with-archive extension to the builder.
+     * Add the with-cancel extension to the builder.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $builder
      * @return void
      */
-    protected function addWithArchived(Builder $builder)
+    protected function addWithCancelled(Builder $builder)
     {
-        $builder->macro('withArchived', function (Builder $builder, $withArchived = true) {
-            if (! $withArchived) {
-                return $builder->withoutArchived();
+        $builder->macro('withCancelled', function (Builder $builder, $withCancelled = true) {
+            if (! $withCancelled) {
+                return $builder->withoutCancelled();
             }
 
             return $builder->withoutGlobalScope($this);
@@ -111,35 +111,35 @@ class ArchivableScope implements Scope
     }
 
     /**
-     * Add the without-archive extension to the builder.
+     * Add the without-cancel extension to the builder.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $builder
      * @return void
      */
-    protected function addWithoutArchived(Builder $builder)
+    protected function addWithoutCancelled(Builder $builder)
     {
-        $builder->macro('withoutArchived', function (Builder $builder) {
+        $builder->macro('withoutCancelled', function (Builder $builder) {
             $model = $builder->getModel();
 
             return $builder->withoutGlobalScope($this)->whereNull(
-                $model->getQualifiedArchivedAtColumn()
+                $model->getQualifiedCancelledAtColumn()
             );
         });
     }
 
     /**
-     * Add the only-archive extension to the builder.
+     * Add the only-cancel extension to the builder.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $builder
      * @return void
      */
-    protected function addOnlyArchived(Builder $builder)
+    protected function addOnlyCancelled(Builder $builder)
     {
-        $builder->macro('onlyArchived', function (Builder $builder) {
+        $builder->macro('onlyCancelled', function (Builder $builder) {
             $model = $builder->getModel();
 
             $builder->withoutGlobalScope($this)->whereNotNull(
-                $model->getQualifiedArchivedAtColumn()
+                $model->getQualifiedCancelledAtColumn()
             );
 
             return $builder;

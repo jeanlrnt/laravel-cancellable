@@ -1,11 +1,11 @@
 <?php
 
-namespace LaravelArchivable\Tests;
+namespace LaravelCancellable\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use LaravelArchivable\LaravelArchivableServiceProvider;
+use LaravelCancellable\LaravelCancellableServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
@@ -16,7 +16,7 @@ class TestCase extends Orchestra
 
         Factory::guessFactoryNamesUsing(
             function (string $modelName) {
-                return 'LaravelArchivable\\Tests\\Database\\Factories\\'.class_basename($modelName).'Factory';
+                return 'LaravelCancellable\\Tests\\Database\\Factories\\'.class_basename($modelName).'Factory';
             }
         );
     }
@@ -37,10 +37,10 @@ class TestCase extends Orchestra
             'prefix' => '',
         ]);
 
-        Schema::create('archivable_models', function (Blueprint $table) {
+        Schema::create('cancellable_models', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->timestamp('archived_at', 0)->nullable();
+            $table->timestamp('cancelled_at', 0)->nullable();
         });
 
         Schema::create('regular_models', function (Blueprint $table) {
@@ -52,7 +52,7 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return [
-            LaravelArchivableServiceProvider::class,
+            LaravelCancellableServiceProvider::class,
         ];
     }
 }

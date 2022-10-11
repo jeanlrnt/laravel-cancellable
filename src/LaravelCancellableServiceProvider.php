@@ -1,11 +1,11 @@
 <?php
 
-namespace LaravelArchivable;
+namespace LaravelCancellable;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\ServiceProvider;
 
-class LaravelArchivableServiceProvider extends ServiceProvider
+class LaravelCancellableServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -24,7 +24,7 @@ class LaravelArchivableServiceProvider extends ServiceProvider
      */
     protected function configureMacros()
     {
-        Blueprint::macro('archivedAt', function ($column = 'archived_at', $precision = 0) {
+        Blueprint::macro('cancelledAt', function ($column = 'cancelled_at', $precision = 0) {
             return $this->timestamp($column, $precision)->nullable();
         });
     }

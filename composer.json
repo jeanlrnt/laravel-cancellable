@@ -1,18 +1,18 @@
 {
-    "name": "joelbutcher/laravel-archivable",
-    "description": "An archivable trait package for Laravel Eloquent models",
-    "keywords": ["laravel", "laravel-archivable"],
+    "name": "jeanlrnt/laravel-cancellable",
+    "description": "An cancellable trait package for Laravel Eloquent models",
+    "keywords": ["laravel", "laravel-cancellable"],
     "license": "MIT",
-    "homepage": "https://github.com/joelbutcher/laravel-archivable",
+    "homepage": "https://github.com/jeanlrnt/laravel-cancellable",
     "type": "library",
     "support": {
-        "issues": "https://github.com/joelbutcher/laravel-archivable/issues",
-        "source": "https://github.com/joelbutcher/laravel-archivable"
+        "issues": "https://github.com/jeanlrnt/laravel-cancellable/issues",
+        "source": "https://github.com/jeanlrnt/laravel-cancellable"
     },
     "authors": [
         {
-            "name": "Joel Butcher",
-            "email": "joel@joelbutcher.co.uk"
+            "name": "Jean Laurent",
+            "email": "jeanz.laurent@gmail.com"
         }
     ],
     "require": {
@@ -27,12 +27,12 @@
     },
     "autoload": {
         "psr-4": {
-            "LaravelArchivable\\": "src"
+            "LaravelCancellable\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "LaravelArchivable\\Tests\\": "tests"
+            "LaravelCancellable\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -46,7 +46,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "LaravelArchivable\\LaravelArchivableServiceProvider"
+              "LaravelCancellableServiceProvider"
             ]
         }
     }

@@ -1,9 +1,9 @@
 <?php
 
-namespace LaravelArchivable\Tests\Database\Factories;
+namespace LaravelCancellable\Tests\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use LaravelArchivable\Tests\TestClasses\RegularModel;
+use LaravelCancellable\Tests\TestClasses\RegularModel;
 
 class RegularModelFactory extends Factory
 {
