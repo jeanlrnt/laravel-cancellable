@@ -2,13 +2,16 @@
 
 namespace LaravelCancellable;
 
+use Closure;
 use Exception;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use LaravelCancellable\Scopes\CancellableScope;
 
 /**
- * @method static static|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder withCancelled()
- * @method static static|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder onlyCancelled()
- * @method static static|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder withoutCancelled()
+ * @method static static|EloquentBuilder|QueryBuilder withCancelled()
+ * @method static static|EloquentBuilder|QueryBuilder onlyCancelled()
+ * @method static static|EloquentBuilder|QueryBuilder withoutCancelled()
  */
 trait Cancellable
 {
@@ -106,6 +109,12 @@ trait Cancellable
         $this->syncOriginalAttributes(array_keys($columns));
     }
 
+    /**
+     * Retrieve the model.
+     *
+     * @return bool
+     *
+     */
     public function unCancel()
     {
         // If the cancelling event return false, we will exit the operation.
@@ -139,7 +148,7 @@ trait Cancellable
     /**
      * Register a "cancelling" model event callback with the dispatcher.
      *
-     * @param  \Closure|string  $callback
+     * @param  Closure|string  $callback
      * @return void
      */
     public static function cancelling($callback)
@@ -150,7 +159,7 @@ trait Cancellable
     /**
      * Register a "cancelled" model event callback with the dispatcher.
      *
-     * @param  \Closure|string  $callback
+     * @param  Closure|string  $callback
      * @return void
      */
     public static function cancelled($callback)
@@ -161,7 +170,7 @@ trait Cancellable
     /**
      * Register a "un-cancelling" model event callback with the dispatcher.
      *
-     * @param  \Closure|string  $callback
+     * @param  Closure|string  $callback
      * @return void
      */
     public static function unCancelling($callback)
@@ -172,7 +181,7 @@ trait Cancellable
     /**
      * Register a "un-cancelled" model event callback with the dispatcher.
      *
-     * @param  \Closure|string  $callback
+     * @param  Closure|string  $callback
      * @return void
      */
     public static function unCancelled($callback)

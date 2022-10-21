@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Scope;
 class CancellableScope implements Scope
 {
     /**
-     * All of the extensions to be added to the builder.
+     * All the extensions to be added to the builder.
      *
      * @var array
      */
@@ -18,8 +18,8 @@ class CancellableScope implements Scope
     /**
      * Apply the scope to a given Eloquent query builder.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param Builder $builder
+     * @param Model $model
      * @return void
      */
     public function apply(Builder $builder, Model $model)
@@ -32,7 +32,7 @@ class CancellableScope implements Scope
     /**
      * Extend the query builder with the needed functions.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
+     * @param Builder $builder
      * @return void
      */
     public function extend(Builder $builder)
@@ -45,7 +45,7 @@ class CancellableScope implements Scope
     /**
      * Get the "cancelled at" column for the builder.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
+     * @param Builder $builder
      * @return string
      */
     protected function getCancelledAtColumn(Builder $builder)
@@ -60,7 +60,7 @@ class CancellableScope implements Scope
     /**
      * Add the cancel extension to the builder.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
+     * @param Builder $builder
      * @return void
      */
     protected function addCancel(Builder $builder)
@@ -77,7 +77,7 @@ class CancellableScope implements Scope
     /**
      * Add the un-cancel extension to the builder.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
+     * @param Builder $builder
      * @return void
      */
     protected function addUnCancel(Builder $builder)
@@ -96,7 +96,7 @@ class CancellableScope implements Scope
     /**
      * Add the with-cancel extension to the builder.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
+     * @param Builder $builder
      * @return void
      */
     protected function addWithCancelled(Builder $builder)
@@ -113,7 +113,7 @@ class CancellableScope implements Scope
     /**
      * Add the without-cancel extension to the builder.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
+     * @param Builder $builder
      * @return void
      */
     protected function addWithoutCancelled(Builder $builder)
@@ -130,7 +130,7 @@ class CancellableScope implements Scope
     /**
      * Add the only-cancel extension to the builder.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
+     * @param Builder $builder
      * @return void
      */
     protected function addOnlyCancelled(Builder $builder)
