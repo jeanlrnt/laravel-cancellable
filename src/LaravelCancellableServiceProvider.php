@@ -16,7 +16,6 @@ class LaravelCancellableServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->configureMacros();
-        $this->configureDirectives();
     }
 
     /**
@@ -28,27 +27,6 @@ class LaravelCancellableServiceProvider extends ServiceProvider
     {
         Blueprint::macro('cancelledAt', function ($column = 'cancelled_at', $precision = 0) {
             return $this->timestamp($column, $precision)->nullable();
-        });
-    }
-
-    /**
-     * Configure the macros to be used.
-     *
-     * @return void
-     */
-    protected function configureDirectives()
-    {
-        Blade::directive('ifCancelled', static function ($object) {
-            return "<?php if ($object->isCancelled($object)) : ?>";
-        });
-        Blade::directive('endifCancelled', static function () {
-            return '<?php endif; ?>';
-        });
-        Blade::directive('ifnotCancelled', static function ($object) {
-            return "<?php if (!$object->isCancelled($object)) : ?>";
-        });
-        Blade::directive('endifnotCancelled', static function () {
-            return '<?php endif; ?>';
         });
     }
 
