@@ -1,3 +1,9 @@
+<p align="center">
+<a href="https://packagist.org/packages/jeanlrnt/laravel-cancellable"><img src="https://img.shields.io/packagist/dt/jeanlrnt/laravel-cancellable" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/jeanlrnt/laravel-cancellable"><img src="https://img.shields.io/packagist/v/jeanlrnt/laravel-cancellable" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/jeanlrnt/laravel-cancellable"><img src="https://img.shields.io/packagist/l/jeanlrnt/laravel-cancellable" alt="License"></a>
+</p>
+
 A simple package for making Laravel Eloquent models 'cancellable'. This package allows for the easy cancelling of models by creating various macros to be used within method chaining.
 
 ## Installation
