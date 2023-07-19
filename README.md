@@ -7,7 +7,7 @@
 
 A simple package for making Laravel Eloquent models 'cancellable'. This package allows for the easy cancelling of models by creating various macros to be used within method chaining.
 
-## Installation & usage
+## Installation
 
 This package requires PHP 7.3 or higher and Laravel 6.0 or higher.
 
