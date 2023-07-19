@@ -4,6 +4,7 @@ namespace LaravelCancellable\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Schema;
 use LaravelCancellable\LaravelCancellableServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
@@ -24,7 +25,7 @@ class TestCase extends Orchestra
     /**
      * Define environment setup.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  Application  $app
      * @return void
      */
     protected function getEnvironmentSetUp($app)
