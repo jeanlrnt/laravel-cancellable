@@ -16,7 +16,7 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            function (string $modelName) {
+            static function (string $modelName) {
                 return 'LaravelCancellable\\Tests\\Database\\Factories\\'.class_basename($modelName).'Factory';
             }
         );
@@ -28,7 +28,7 @@ class TestCase extends Orchestra
      * @param  Application  $app
      * @return void
      */
-    protected function getEnvironmentSetUp($app)
+    protected function getEnvironmentSetUp($app): void
     {
         // Setup default database to use sqlite :memory:
         $app['config']->set('database.default', 'testbench');
@@ -38,19 +38,19 @@ class TestCase extends Orchestra
             'prefix' => '',
         ]);
 
-        Schema::create('cancellable_models', function (Blueprint $table) {
+        Schema::create('cancellable_models', static function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
             $table->timestamp('cancelled_at', 0)->nullable();
         });
 
-        Schema::create('regular_models', function (Blueprint $table) {
+        Schema::create('regular_models', static function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
         });
     }
 
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [
             LaravelCancellableServiceProvider::class,

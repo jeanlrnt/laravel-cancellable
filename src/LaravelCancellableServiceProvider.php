@@ -13,7 +13,7 @@ class LaravelCancellableServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->configureMacros();
     }
@@ -23,7 +23,7 @@ class LaravelCancellableServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function configureMacros()
+    protected function configureMacros(): void
     {
         Blueprint::macro('cancelledAt', function ($column = 'cancelled_at', $precision = 0) {
             return $this->timestamp($column, $precision)->nullable();

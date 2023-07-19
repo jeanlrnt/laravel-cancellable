@@ -27,7 +27,7 @@ trait Cancellable
      *
      * @return void
      */
-    public static function bootCancellable()
+    public static function bootCancellable(): void
     {
         static::addGlobalScope(new CancellableScope);
     }
@@ -37,7 +37,7 @@ trait Cancellable
      *
      * @return void
      */
-    public function initializeCancellable()
+    public function initializeCancellable(): void
     {
         if (! isset($this->casts[$this->getCancelledAtColumn()])) {
             $this->casts[$this->getCancelledAtColumn()] = 'datetime';
@@ -47,7 +47,7 @@ trait Cancellable
     /**
      * Cancel the model.
      *
-     * @return bool|null
+     * @return bool|void|null
      *
      * @throws Exception
      */
@@ -56,7 +56,7 @@ trait Cancellable
         $this->mergeAttributesFromClassCasts();
 
         if (is_null($this->getKeyName())) {
-            throw new Exception('No primary key defined on model.');
+            throw new \RuntimeException('No primary key defined on model.');
         }
 
         // If the model doesn't exist, there is nothing to cancel.
@@ -88,7 +88,7 @@ trait Cancellable
      *
      * @return void
      */
-    public function runCancel()
+    public function runCancel(): void
     {
         $query = $this->setKeysForSaveQuery($this->newModelQuery());
 
@@ -115,7 +115,7 @@ trait Cancellable
      * @return bool
      *
      */
-    public function unCancel()
+    public function unCancel(): bool
     {
         // If the cancelling event return false, we will exit the operation.
         // Otherwise, we will clear the cancelled at timestamp and continue
@@ -140,9 +140,9 @@ trait Cancellable
      *
      * @return bool
      */
-    public function isCancelled()
+    public function isCancelled(): bool
     {
-        return ! is_null($this->{$this->getCancelledAtColumn()});
+        return !is_null($this->{$this->getCancelledAtColumn()});
     }
 
     /**
@@ -151,7 +151,7 @@ trait Cancellable
      * @param  Closure|string  $callback
      * @return void
      */
-    public static function cancelling($callback)
+    public static function cancelling($callback): void
     {
         static::registerModelEvent('cancelling', $callback);
     }
@@ -162,7 +162,7 @@ trait Cancellable
      * @param  Closure|string  $callback
      * @return void
      */
-    public static function cancelled($callback)
+    public static function cancelled($callback): void
     {
         static::registerModelEvent('cancelled', $callback);
     }
@@ -173,7 +173,7 @@ trait Cancellable
      * @param  Closure|string  $callback
      * @return void
      */
-    public static function unCancelling($callback)
+    public static function unCancelling($callback): void
     {
         static::registerModelEvent('unCancelling', $callback);
     }
@@ -184,7 +184,7 @@ trait Cancellable
      * @param  Closure|string  $callback
      * @return void
      */
-    public static function unCancelled($callback)
+    public static function unCancelled($callback): void
     {
         static::registerModelEvent('unCancelled', $callback);
     }
@@ -194,7 +194,7 @@ trait Cancellable
      *
      * @return string
      */
-    public function getCancelledAtColumn()
+    public function getCancelledAtColumn(): string
     {
         return defined('static::CANCELLED_AT') ? static::CANCELLED_AT : 'cancelled_at';
     }
@@ -204,7 +204,7 @@ trait Cancellable
      *
      * @return string
      */
-    public function getQualifiedCancelledAtColumn()
+    public function getQualifiedCancelledAtColumn(): string
     {
         return $this->qualifyColumn($this->getCancelledAtColumn());
     }
