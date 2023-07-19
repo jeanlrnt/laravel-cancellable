@@ -2,6 +2,7 @@
 <a href="https://github.com/jeanlrnt/laravel-cancellable/actions"><img src="https://github.com/jeanlrnt/laravel-cancellable/workflows/tests/badge.svg" alt="Build Status"></a>
 <a href="https://packagist.org/packages/jeanlrnt/laravel-cancellable"><img src="https://img.shields.io/packagist/dt/jeanlrnt/laravel-cancellable" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/jeanlrnt/laravel-cancellable"><img src="https://img.shields.io/packagist/v/jeanlrnt/laravel-cancellable" alt="Last stable version"></a>
+<a href="https://scrutinizer-ci.com/g/jeanlrnt/laravel-cancellable/?branch=master"><img src="https://scrutinizer-ci.com/g/jeanlrnt/laravel-cancellable/badges/coverage.png?b=master" alt="Code Coverage"></a>
 <a href="https://packagist.org/packages/jeanlrnt/laravel-cancellable"><img src="https://img.shields.io/packagist/l/jeanlrnt/laravel-cancellable" alt="License"></a>
 </p>
 
