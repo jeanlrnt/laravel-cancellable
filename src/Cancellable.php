@@ -6,6 +6,7 @@ use Closure;
 use Exception;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Support\Carbon;
 use LaravelCancellable\Scopes\CancellableScope;
 
 /**
@@ -15,12 +16,6 @@ use LaravelCancellable\Scopes\CancellableScope;
  */
 trait Cancellable
 {
-    /**
-     * Indicates if the model should use cancels.
-     *
-     * @var bool
-     */
-    public $cancels = true;
 
     /**
      * Boot the cancelling trait for a model.
@@ -142,7 +137,8 @@ trait Cancellable
      */
     public function isCancelled(): bool
     {
-        return !is_null($this->{$this->getCancelledAtColumn()});
+        return !is_null($this->{$this->getCancelledAtColumn()})
+            && (Carbon::create($this->{$this->getCancelledAtColumn()}) <= Carbon::now());
     }
 
     /**
@@ -196,7 +192,7 @@ trait Cancellable
      */
     public function getCancelledAtColumn(): string
     {
-        return defined('static::CANCELLED_AT') ? static::CANCELLED_AT : 'cancelled_at';
+        return defined('static::CANCELLED_AT') ? constant('static::CANCELLED_AT') : 'cancelled_at';
     }
 
     /**

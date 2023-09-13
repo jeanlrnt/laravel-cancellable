@@ -2,6 +2,7 @@
 
 namespace LaravelCancellable\Tests;
 
+use Carbon\Carbon;
 use LaravelCancellable\Tests\TestClasses\CancellableModel;
 use LaravelCancellable\Tests\TestClasses\RegularModel;
 
@@ -288,4 +289,35 @@ class CancellableTest extends TestCase
 
         $this->assertFalse($model->fresh()->isCancelled());
     }
+
+    /** @test */
+    public function a_model_can_be_queried_normally_when_cancelled_at_a_later_date(): void
+    {
+        $first = CancellableModel::factory()->create();
+        $first->cancelled_at = Carbon::now()->addDay();
+        $first->save();
+
+        $this->assertDatabaseCount('cancellable_models', 1);
+
+        $this->assertCount(1, CancellableModel::all());
+        $this->assertCount(0, CancellableModel::onlyCancelled()->get());
+        $this->assertCount(1, CancellableModel::withoutCancelled()->get());
+        $this->assertCount(1, CancellableModel::withCancelled()->get());
+    }
+
+    /** @test */
+    public function a_model_cannot_be_queried_normally_when_cancelled_at_a_previous_date(): void
+    {
+        $first = CancellableModel::factory()->create();
+        $first->cancelled_at = Carbon::now()->subDay();
+        $first->save();
+
+        $this->assertDatabaseCount('cancellable_models', 1);
+
+        $this->assertCount(0, CancellableModel::all());
+        $this->assertCount(1, CancellableModel::onlyCancelled()->get());
+        $this->assertCount(0, CancellableModel::withoutCancelled()->get());
+        $this->assertCount(1, CancellableModel::withCancelled()->get());
+    }
+
 }

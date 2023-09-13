@@ -2,6 +2,7 @@
 
 namespace LaravelCancellable\Scopes;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
@@ -25,7 +26,8 @@ class CancellableScope implements Scope
     public function apply(Builder $builder, Model $model)
     {
         if (is_callable([$model, 'getQualifiedCancelledAtColumn'], true, $name)) {
-            $builder->whereNull($model->getQualifiedCancelledAtColumn());
+            $builder->whereNull($model->getQualifiedCancelledAtColumn())
+                ->orWhere($model->getQualifiedCancelledAtColumn(), '>', Carbon::now());
         }
     }
 
@@ -123,7 +125,7 @@ class CancellableScope implements Scope
 
             return $builder->withoutGlobalScope($this)->whereNull(
                 $model->getQualifiedCancelledAtColumn()
-            );
+            )->orWhere($model->getQualifiedCancelledAtColumn(), '>', Carbon::now());
         });
     }
 
@@ -138,9 +140,7 @@ class CancellableScope implements Scope
         $builder->macro('onlyCancelled', function (Builder $builder) {
             $model = $builder->getModel();
 
-            $builder->withoutGlobalScope($this)->whereNotNull(
-                $model->getQualifiedCancelledAtColumn()
-            );
+            $builder->withoutGlobalScope($this)->where($model->getQualifiedCancelledAtColumn(), '<=', Carbon::now());
 
             return $builder;
         });
